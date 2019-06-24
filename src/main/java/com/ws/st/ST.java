@@ -12,7 +12,10 @@ public class ST<Key extends Comparable<Key>, Value> {
     }
 
     void put(Key key, Value val) {
-        st.put(key, val);
+        if (val == null)
+            delete(key);
+        else
+            st.put(key, val);
     }
 
     Value get(Key key) {
