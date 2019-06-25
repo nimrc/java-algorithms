@@ -1,54 +1,105 @@
 package com.ws.find;
 
+import com.ws.base.StdOut;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.URL;
+import java.util.Scanner;
+
 public class UF {
-    // 分量ID
-    private int[] id;
-    // 分量数量
+    private int[] parent;
+
+    private byte[] rank;
+
     private int count;
 
-    UF(int N) {
-        count = N;
-        id = new int[N];
+    public UF(int N) {
+        if (N < 0) throw new IllegalArgumentException();
 
-        for (int i = 0; i < N; i++)
-            id[i] = i;
+        count = N;
+        parent = new int[N];
+        rank = new byte[N];
+
+        for (int i = 0; i < N; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
     }
 
-    void union(int p, int q) {
-        int pid = find(p);
-        int qid = find(q);
-
-        if (p == q) return;
-
-        for (int i = 0; i < id.length; i++) {
-            if (id[i] == pid) id[i] = qid;
+    /**
+     * Returns the component identifier for the component containing site {@code p}.
+     */
+    public int find(int p) {
+        validate(p);
+        while (p != parent[p]) {
+            p = find(parent[p]);
         }
 
-        count--;
+        return parent[p];
     }
 
-    int find(int p) {
-        return id[p];
-    }
-
-    boolean connected(int p, int q) {
-        return find(p) == find(q);
-    }
-
-    int count() {
+    public int count() {
         return count;
     }
 
-    public static void main(String[] args) {
-        UF uf = new UF(10);
-        Integer[][] links = {{4, 3}, {3, 8}, {6, 5}, {9, 4}, {2, 1}, {5, 0}, {7, 2}, {6, 1}}; //, {1, 0}, {6, 7}};
+    public boolean connected(int p, int q) {
+        return find(p) == find(q);
+    }
 
-        for (Integer[] link : links)
-            uf.union(link[0], link[1]);
+    public boolean union(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
 
-        System.out.println(uf.count());
+        if (rootP == rootQ)
+            return false;
 
-        for (Integer[] link : links)
-            System.out.println(uf.connected(link[0], link[1]));
+        if (rank[rootP] < rank[rootQ])
+            parent[rootP] = rootQ;
+        else if (rank[rootP] > rank[rootQ])
+            parent[rootQ] = rootP;
+        else {
+            parent[rootQ] = rootP;
+            rank[rootP]++;
+        }
+        count--;
+
+        return true;
+    }
+
+    // validate that p is a valid index
+    private void validate(int p) {
+        int n = parent.length;
+        if (p < 0 || p >= n) {
+            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (n - 1));
+        }
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        URL path = QuickFindUF.class.getClassLoader().getResource(args[0]);
+
+        if (path != null) {
+            Scanner scanner = new Scanner(new FileReader(new File(path.getPath())));
+            int N = scanner.nextInt();
+            UF uf = new UF(N);
+
+            long start = System.currentTimeMillis();
+
+            while (scanner.hasNext()) {
+                int p = scanner.nextInt();
+                int q = scanner.nextInt();
+
+                if (uf.connected(p, q)) continue;
+
+                uf.union(p, q);
+
+                StdOut.println(p + "  " + q);
+            }
+
+            StdOut.println(uf.count() + " components");
+
+            StdOut.println("执行耗时 : " + (System.currentTimeMillis() - start) / 1000f + " 秒 ");
+        }
     }
 }
