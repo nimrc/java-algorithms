@@ -34,7 +34,7 @@ abstract class BaseSort {
         return true;
     }
 
-    private static void showProcess() {
+    public static void showProcess() {
         debug = true;
     }
 

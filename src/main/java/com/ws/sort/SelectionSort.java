@@ -17,8 +17,4 @@ public class SelectionSort extends BaseSort {
             swap(array, i, min);
         }
     }
-
-    public static void main(String[] args) {
-        run(new SelectionSort());
-    }
 }

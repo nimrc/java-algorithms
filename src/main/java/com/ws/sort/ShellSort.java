@@ -18,10 +18,5 @@ public class ShellSort extends BaseSort {
 
             h /= 3;
         }
-
-    }
-
-    public static void main(String[] args) {
-        run(new ShellSort());
     }
 }

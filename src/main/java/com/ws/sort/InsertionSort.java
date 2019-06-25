@@ -13,8 +13,4 @@ public class InsertionSort extends BaseSort {
                 swap(array, j, j - 1);
         }
     }
-
-    public static void main(String[] args) {
-        run(new InsertionSort());
-    }
 }
