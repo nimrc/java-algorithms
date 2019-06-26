@@ -36,14 +36,4 @@ public class BST<K extends Comparable<K>, V> extends BaseTree<K, V> {
 
         return node;
     }
-
-    public int size() {
-        return size(root);
-    }
-
-    private int size(Node node) {
-        if (node == null) return 0;
-
-        return node.size;
-    }
 }

@@ -10,8 +10,8 @@ public class Util {
     }
 
     public static int gcd(int p, int q) {
-        p = Math.abs(p);
-        q = Math.abs(q);
+        p = abs(p);
+        q = abs(q);
 
         return q == 0 ? p : gcd(q, p % q);
     }

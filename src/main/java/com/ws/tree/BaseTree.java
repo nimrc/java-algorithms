@@ -20,7 +20,7 @@ public abstract class BaseTree<K extends Comparable<K>, V> {
         return preOrder(root);
     }
 
-    public String preOrder(Node node) {
+    private String preOrder(Node node) {
         if (node == null) return "";
 
         return preOrder(node.left) + node.val + preOrder(node.right);
@@ -69,4 +69,72 @@ public abstract class BaseTree<K extends Comparable<K>, V> {
         return node;
     }
 
+    // 删除最小节点
+    public void deleteMin() {
+        root = deleteMin(root);
+    }
+
+    private Node deleteMin(Node node) {
+        if (node.left == null) return node.right;
+
+        node.left = deleteMin(node.left);
+        node.size = resize(node);
+
+        return node;
+    }
+
+    // 删除最大节点
+    public void deleteMax() {
+        root = deleteMax(root);
+    }
+
+    private Node deleteMax(Node node) {
+        if (node.right == null) return node.left;
+
+        node.right = deleteMax(node.right);
+        node.size = resize(node);
+
+        return node;
+    }
+
+    // 删除指定节点
+    public void delete(K key) {
+        root = delete(root, key);
+    }
+
+    private Node delete(Node node, K key) {
+        if (node == null) return null;
+
+        int cmp = key.compareTo(node.key);
+
+        if (cmp < 0) node.left = delete(node.left, key);
+        else if (cmp > 0) node.right = delete(node.right, key);
+        else {
+            if (node.left == null) return node.right;
+            if (node.right == null) return node.left;
+
+            Node t = node;
+            node = min(t.right);
+            node.right = deleteMin(t.right);
+            node.left = t.left;
+        }
+
+        node.size = resize(node);
+
+        return node;
+    }
+
+    public int size() {
+        return size(root);
+    }
+
+    int resize(Node node) {
+        return size(node.left) + size(node.right) + 1;
+    }
+
+    int size(Node node) {
+        if (node == null) return 0;
+
+        return node.size;
+    }
 }

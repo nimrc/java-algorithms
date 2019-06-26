@@ -17,6 +17,13 @@ public class TreeTest extends TestCase {
         assertEquals(new Character('B'), bst.min());
         assertEquals(new Character('T'), bst.max());
 
+        bst.deleteMin();
+        bst.deleteMax();
+        assertEquals("EILMPS", bst.preOrder());
+
+        bst.delete('M');
+        assertEquals("EILPS", bst.preOrder());
+
         assertEquals(new Character('S'), bst.get('S'));
         assertNull(bst.get('A'));
     }
