@@ -47,4 +47,16 @@ public class STTest extends TestCase {
         assertEquals(new Character('L'), st.get('L'));
         assertNull(st.get('O'));
     }
+
+    public void testBinarySearchST() {
+        BinarySearchST<Character, Character> bst = new BinarySearchST<>(15);
+        String str = "ABCDEFGHIJKLMN";
+
+        for (int i = 0; i < str.length(); i++)
+            bst.put(str.charAt(i), str.charAt(i));
+
+        assertEquals(str.length(), bst.size());
+
+        StdOut.println("bst: " + bst);
+    }
 }
