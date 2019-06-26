@@ -1,3 +1,6 @@
+/*
+ * 无序链表中的顺序查找
+ */
 package com.ws.st;
 
 public class SequentialSearchST<K, V> {
@@ -34,5 +37,15 @@ public class SequentialSearchST<K, V> {
         }
 
         first = new Node(key, val, first);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Node x = first; x != null; x = x.next)
+            sb.append(x.val);
+
+        return sb.reverse().toString();
     }
 }

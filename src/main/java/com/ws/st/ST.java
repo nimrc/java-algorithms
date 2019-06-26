@@ -4,85 +4,70 @@ import com.ws.base.StdOut;
 
 import java.util.TreeMap;
 
-public class ST<Key extends Comparable<Key>, Value> {
-    private TreeMap<Key, Value> st;
+public class ST<K extends Comparable<K>, V> {
+    private TreeMap<K, V> st;
 
     ST() {
         st = new TreeMap<>();
     }
 
-    void put(Key key, Value val) {
+    public void put(K key, V val) {
         if (val == null)
             delete(key);
         else
             st.put(key, val);
     }
 
-    Value get(Key key) {
-        return st.get(key);
+    public V get(K k) {
+        return st.get(k);
     }
 
-    private void delete(Key key) {
-        st.remove(key);
+    public void delete(K k) {
+        st.remove(k);
     }
 
-    boolean contains(Key key) {
-        return get(key) != null;
+    public boolean contains(K k) {
+        return get(k) != null;
     }
 
-    boolean isEmpty() {
-        return size() != 0;
+    public boolean isEmpty() {
+        return size() == 0;
     }
 
-    private int size() {
+    public int size() {
         return st.size();
     }
 
-    private Key min() {
+    public K min() {
         return st.firstKey();
     }
 
-    private Key max() {
+    public K max() {
         return st.lastKey();
     }
 
-    Key floor(Key key) {
+    public K floor(K key) {
         return st.floorKey(key);
     }
 
-    Key ceiling(Key key) {
+    public K ceiling(K key) {
         return st.ceilingKey(key);
     }
 
-    private void deleteMin() {
+    public void deleteMin() {
         delete(min());
     }
 
-    private void deleteMax() {
+    public void deleteMax() {
         delete(max());
     }
 
-    Iterable<Key> keys() {
+    Iterable<K> keys() {
         return st.keySet();
     }
 
-    public static void main(String[] args) {
-        ST<Character, Integer> st = new ST<>();
-
-        String s = "SEARCHEXAMPLE";
-
-
-        for (int i = 0; i < s.length(); i++)
-            st.put(s.charAt(i), i);
-
-        StdOut.println("min key: " + st.min());
-        StdOut.println("max key: " + st.max());
-
-        st.deleteMax();
-        st.deleteMin();
-
-        for (Character x : st.keys()) {
-            StdOut.println(x + " " + st.get(x));
-        }
+    @Override
+    public String toString() {
+        return st.toString();
     }
 }
