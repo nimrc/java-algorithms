@@ -33,7 +33,6 @@ public abstract class BaseTree<K extends Comparable<K>, V> {
         return Order.inOrder(this);
     }
 
-
     public K max() {
         return max(root).key;
     }

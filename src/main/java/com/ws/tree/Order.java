@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import com.ws.tree.BaseTree.Node;
 
 public class Order<T> extends ArrayList<T> {
+    Order(int cap) {
+        super(cap);
+    }
+
     /**
      * 先序遍历
      *
@@ -14,7 +18,7 @@ public class Order<T> extends ArrayList<T> {
     public static Order<Node> preOrder(BaseTree tree) {
         if (tree.root == null) return null;
 
-        Order<Node> order = new Order<>();
+        Order<Node> order = new Order<>(tree.size());
         preOrder(order, tree.root);
 
         return order;
@@ -29,7 +33,7 @@ public class Order<T> extends ArrayList<T> {
     public static Order<Node> inOrder(BaseTree tree) {
         if (tree.root == null) return null;
 
-        Order<Node> order = new Order<>();
+        Order<Node> order = new Order<>(tree.size());
         inOrder(order, tree.root);
 
         return order;
@@ -44,7 +48,7 @@ public class Order<T> extends ArrayList<T> {
     public static Order<Node> postOrder(BaseTree tree) {
         if (tree.root == null) return null;
 
-        Order<Node> order = new Order<>();
+        Order<Node> order = new Order<>(tree.size());
         postOrder(order, tree.root);
 
         return order;
