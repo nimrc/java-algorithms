@@ -14,17 +14,25 @@ public abstract class BaseTree<K extends Comparable<K>, V> {
             this.val = val;
             this.size = size;
         }
+
+        @Override
+        public String toString() {
+            return val.toString();
+        }
     }
 
-    public String preOrder() {
-        return preOrder(root);
+    public Iterable preOrder() {
+        return Order.preOrder(this);
     }
 
-    private String preOrder(Node node) {
-        if (node == null) return "";
-
-        return preOrder(node.left) + node.val + preOrder(node.right);
+    public Iterable postOrder() {
+        return Order.postOrder(this);
     }
+
+    public Iterable inOrder() {
+        return Order.inOrder(this);
+    }
+
 
     public K max() {
         return max(root).key;
